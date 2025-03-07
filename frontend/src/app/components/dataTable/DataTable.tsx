@@ -7,6 +7,7 @@ interface DataTableProps<T> {
   extraStyles?: Record<keyof T, string>;
   enableHeaders?: boolean;
   iconsPerKey?: Record<keyof T, string>;
+  loading: boolean;
 }
 
 function DataTable<T extends Record<string, ReactNode> & { id: string }>({
@@ -15,6 +16,7 @@ function DataTable<T extends Record<string, ReactNode> & { id: string }>({
   enableHeaders = false,
   extraStyles = {} as Record<keyof T, string>,
   iconsPerKey = {} as Record<keyof T, string>,
+  loading,
 }: DataTableProps<T>) {
   const keys = data.length > 0 ? (Object.keys(data[0]).filter((key) => key !== 'id') as string[]) : [];
 
@@ -37,32 +39,38 @@ function DataTable<T extends Record<string, ReactNode> & { id: string }>({
           </thead>
         )}
         <tbody>
-          {data?.map((item) => (
-            <tr key={item.id} className="border-b border-t border-neutral-700">
-              <td className="px-2 py-2"></td>
-              {keys.map((key) => (
-                <td className={`px-6 py-4 max-w-30 text-lg ${extraStyles[key] || ''}`} key={key}>
-                  <div className="flex">
-                    {iconsPerKey[key] && (
-                      <Image
-                        className="mr-2"
-                        src={`/images/${iconsPerKey[key]}.svg`}
-                        alt={`${iconsPerKey[key]} icon`}
-                        width={24}
-                        height={24}
-                      />
-                    )}
-                    {item[key]}
-                  </div>
-                </td>
-              ))}
-              <td className="px-6 py-4 text-right">
-                <a href="#" className="font-medium text-lime-200 hover:underline">
-                  Edit
-                </a>
-              </td>
+          {loading && (
+            <tr>
+              <td className="text-3xl text-center italic text-zinc-700">Loading List...</td>
             </tr>
-          ))}
+          )}
+          {!loading &&
+            data?.map((item) => (
+              <tr key={item.id} className="border-b border-t border-neutral-700">
+                <td className="px-2 py-2"></td>
+                {keys.map((key) => (
+                  <td className={`px-6 py-4 max-w-30 text-lg ${extraStyles[key] || ''}`} key={key}>
+                    <div className="flex">
+                      {iconsPerKey[key] && (
+                        <Image
+                          className="mr-2"
+                          src={`/images/${iconsPerKey[key]}.svg`}
+                          alt={`${iconsPerKey[key]} icon`}
+                          width={24}
+                          height={24}
+                        />
+                      )}
+                      {item[key]}
+                    </div>
+                  </td>
+                ))}
+                <td className="px-6 py-4 text-right">
+                  <a href="#" className="font-medium text-lime-200 hover:underline">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
