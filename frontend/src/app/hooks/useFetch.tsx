@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 
 export default function useFetch<T>(path: string, shouldFetch = true) {
-  const { data, error, isLoading } = useSWR<T>(shouldFetch ? `/api/${path}` : null, fetcher);
+  const { data, error, isLoading } = useSWR<T, Error>(shouldFetch ? `/api/${path}` : null, fetcher);
 
   return {
     data,

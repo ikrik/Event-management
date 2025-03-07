@@ -5,8 +5,7 @@ import { BASE_API_URL } from '@constants/endpoints';
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const query = searchParams.get('query');
-    const res = await fetch(`${BASE_API_URL}/events/autocomplete?query=${query}`); // Use full URL with protocol
+    const res = await fetch(`${BASE_API_URL}/events/autocomplete?${searchParams.toString()}`);
     if (!res.ok) {
       throw new Error('Failed to fetch data');
     }
