@@ -1,21 +1,18 @@
-import { CURRENT_URL } from '@constants/endpoints';
-import { formatDate } from '@utils/helpers';
-import { ReactNode } from 'react';
-import { EventItem } from 'types/events.types';
 import Home from '@components/home/Home';
+import InitialFetchEvents from '../services/InitialFetchEvents';
 
 export default async function HomePage() {
-  let data: (EventItem & Record<string, ReactNode>)[] = [];
-  try {
-    const res = await fetch(`${CURRENT_URL}/api/events`);
-    data = await res.json();
-  } catch (e) {
-    console.error('Initial Event loading Went wrong', e);
+  const res = await InitialFetchEvents();
+
+  if (!res.events) {
+    return (
+      <div className="flex justify-between">
+        <div className="flex-initial w-1/2">
+          <h1 className="text-4xl font-bold pb-3">Oops! Something went wrong in the server...</h1>
+        </div>
+      </div>
+    );
   }
 
-  if (data.length > 0) {
-    data = data.map((item) => ({ ...item, date: formatDate(item.date) }));
-  }
-
-  return <Home initialEvents={data} />;
+  return <Home initialEvents={res?.events.data} initPagination={res?.events.metadata} />;
 }
