@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/api-gateway/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/api-gateway",
+  "projects": {
+    "contracts": {
+      "type": "library",
+      "root": "libs/contracts",
+      "entryFile": "index",
+      "sourceRoot": "libs/contracts/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/contracts/tsconfig.lib.json"
+      }
+    },
+    "event-management": {
+      "type": "application",
+      "root": "apps/event-management",
+      "entryFile": "main",
+      "sourceRoot": "apps/event-management/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/event-management/tsconfig.app.json"
+      }
+    },
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    }
+  }
+}

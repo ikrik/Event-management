@@ -1,0 +1,48 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Query,
+  // Delete,
+} from '@nestjs/common';
+import { EventsService } from './events.service';
+import { CreateEventDto } from './dto/create-event.dto';
+import { UpdateEventDto } from './dto/update-event.dto';
+
+@Controller('events')
+export class EventsController {
+  constructor(private readonly eventsService: EventsService) {}
+
+  @Post()
+  create(@Body() CreateEventDto: CreateEventDto) {
+    return this.eventsService.create(CreateEventDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.eventsService.findAll();
+  }
+
+  @Get('latest')
+  findLatest() {
+    return this.eventsService.findLatest();
+  }
+
+  @Get('autocomplete')
+  autocomplete(@Query('query') query: string) {
+    return this.eventsService.autocomplete(query);
+  }
+
+  @Get('search')
+  searchEvent(@Query('location') location: string) {
+    return this.eventsService.search(location);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
+    return this.eventsService.update(id, updateEventDto);
+  }
+}

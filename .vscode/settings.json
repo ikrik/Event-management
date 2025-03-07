@@ -1,0 +1,24 @@
+{
+  "eslint.format.enable": true,
+  "prettier.enable": true,
+  "editor.autoClosingBrackets": "always",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "never"
+  },
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 5,
+  "workbench.editor.enablePreview": true,
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.editor.enablePreviewFromCodeNavigation": true,
+  "workbench.editor.openPositioning": "first",
+  "workbench.editor.labelFormat": "short",
+  "workbench.editor.untitled.labelFormat": "content",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.enabled": true,
+  "cSpell.words": ["Reydix"]
+}
