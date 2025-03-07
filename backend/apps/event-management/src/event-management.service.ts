@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateEventDto, UpdateEventDto, EventDto } from '@app/contracts/events';
 import { events } from './mock/events';
+import { ListResponseDto } from '@app/contracts/list-response.dto';
+import { ListRequestDto } from '@app/contracts/list-request.dto';
 
 @Injectable()
 export class EventManagementService {
@@ -30,8 +32,25 @@ export class EventManagementService {
     return 'Event found!';
   }
 
-  findAllEvents(): EventDto[] {
-    return this.events;
+  findAllEvents({ page = 1, pageSize = 5, searchLocation = '' }: ListRequestDto): ListResponseDto<EventDto> {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    const filteredEvents =
+      searchLocation?.length > 0
+        ? this.events.filter((event) => event.location.toLowerCase() === searchLocation.toLowerCase())
+        : this.events;
+    const total = filteredEvents.length;
+    const actualEvents = filteredEvents.slice(startIndex, endIndex);
+
+    return {
+      metadata: {
+        page,
+        pageSize,
+        total: total,
+      },
+      data: actualEvents,
+    };
   }
 
   findLatestEvent(): { event: EventDto | null } {
@@ -54,11 +73,5 @@ export class EventManagementService {
           .map((item) => item.location),
       ),
     ];
-  }
-
-  searchEvents(location: string): EventDto[] {
-    return !location
-      ? this.events
-      : this.events.filter((event) => event.location.toLowerCase() === location.toLowerCase());
   }
 }

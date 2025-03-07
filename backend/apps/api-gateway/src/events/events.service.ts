@@ -8,6 +8,7 @@ import {
 } from '@app/contracts/events';
 import { Observable } from 'rxjs';
 import { EVENTS_MANAGEMENT_CLIENT } from './constants';
+import { ListRequestDto } from '../dto/list-request.dto';
 
 @Injectable()
 export class EventsService {
@@ -17,24 +18,16 @@ export class EventsService {
     return this.eventManagement.send(EVENTS_PATTERNS.CREATE, createEventDto);
   }
 
-  findAll(): Observable<ClientEventDto[]> {
-    return this.eventManagement.send(EVENTS_PATTERNS.FIND_ALL, {});
+  findAll(query: ListRequestDto): Observable<ClientEventDto[]> {
+    return this.eventManagement.send(EVENTS_PATTERNS.FIND_ALL, query);
   }
 
   findLatest(): Observable<{ event: ClientEventDto | null }> {
     return this.eventManagement.send(EVENTS_PATTERNS.FIND_LATEST, {});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} events`;
-  }
-
   autocomplete(query: string) {
     return this.eventManagement.send(EVENTS_PATTERNS.AUTOCOMPLETE, query);
-  }
-
-  search(location: string) {
-    return this.eventManagement.send(EVENTS_PATTERNS.SEARCH, location);
   }
 
   update(id: string, updateEventDto: ClientUpdateEventDto): Observable<ClientEventDto> {

@@ -22,8 +22,8 @@ export class EventsController {
   }
 
   @Get()
-  findAll() {
-    return this.eventsService.findAll();
+  findAll(@Query('page') page = '1', @Query('limit') pageSize = '5', @Query('searchLocation') searchLocation = '') {
+    return this.eventsService.findAll({ page: Number(page), pageSize: Number(pageSize), searchLocation });
   }
 
   @Get('latest')
@@ -34,11 +34,6 @@ export class EventsController {
   @Get('autocomplete')
   autocomplete(@Query('query') query: string) {
     return this.eventsService.autocomplete(query);
-  }
-
-  @Get('search')
-  searchEvent(@Query('location') location: string) {
-    return this.eventsService.search(location);
   }
 
   @Patch(':id')
