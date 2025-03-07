@@ -54,8 +54,14 @@ The frontend consists of one **Next.js** services:
    git clone git@github.com:ikrik/Event-management.git
    cd Event-management
    ```
+2. **Add a `.env` file inside frontend folder with the following defaults**
 
-2. **Build and start the containers**:
+   ```bash
+   NEXT_PUBLIC_BASE_URL=http://localhost:3000
+   NEXT_PUBLIC_API_URL=http://api-gateway:3001/api/v1
+   ```
+
+3. **Build and start the containers**:
 
    ```bash
    docker-compose up --build
@@ -63,13 +69,13 @@ The frontend consists of one **Next.js** services:
 
    This will build the images and start the services.
 
-3. **Access the application**:
+4. **Access the application**:
 
     - 🖥️ **Frontend:** `http://localhost:3000`
     - 🔐 **API Gateway:** `http://localhost:3001`
     - 🎮 **Event Management Microservice:** Runs on port `3002` but is accessed internally via the API Gateway.
 
-4. **Stop the containers**:
+5. **Stop the containers**:
 
    ```bash
    docker-compose down
