@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { BASE_API_URL } from '@constants/endpoints';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const params = req.nextUrl.searchParams.toString();
+  const queryParams = params?.length > 0 ? `?${params}` : '';
   try {
-    const res = await fetch(`${BASE_API_URL}/events`); // Use full URL with protocol
+    const res = await fetch(`${BASE_API_URL}/events${queryParams}`);
     if (!res.ok) {
       throw new Error('Failed to fetch data');
     }
-    const events = await res.json(); // Await the JSON parsing
-    return NextResponse.json(events); // Return the parsed data
+    const events = await res.json();
+    return NextResponse.json(events);
   } catch (e) {
-    return NextResponse.json({ error: 'Failed to fetch events' }, { status: 500 }); // Return a proper error response
+    return NextResponse.json({ error: 'Failed to fetch events' }, { status: 500 });
   }
 }
