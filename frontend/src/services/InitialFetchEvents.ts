@@ -1,4 +1,5 @@
 import { CURRENT_URL } from '@constants/endpoints';
+import { fetcher } from '@utils/fetcher';
 import { formatDate } from '@utils/helpers';
 import { FormattedEventItem, ListResponse } from 'types/events.types';
 
@@ -11,11 +12,7 @@ const InitialFetchEvents = async (): Promise<InitialFetchEventsItem> => {
   const response: InitialFetchEventsItem = { events: undefined, error: undefined };
 
   try {
-    const res = await fetch(`${CURRENT_URL}/api/events`);
-    if (!res.ok) {
-      throw new Error(`API request failed with status: ${res.status}`);
-    }
-    const eventsData: ListResponse<FormattedEventItem> = await res.json();
+    const eventsData: ListResponse<FormattedEventItem> = await fetcher(`${CURRENT_URL}/api/events`);
     response.events = {
       ...eventsData,
       data: eventsData.data.map((item) => ({ ...item, date: formatDate(item.date) })),
