@@ -5,13 +5,9 @@ import { FC } from 'react';
 
 const basicStyles = 'bg-lime-300 text-black hover:bg-lime-400 hover:cursor-pointer';
 
-export const EventCreateButton: FC = () => {
-  const handleCreateEvent = () => {
-    alert('Create event clicked!');
-  };
-
+export const EventCreateButton: FC<{ onClick: () => void }> = ({ onClick }) => {
   return (
-    <Button onClick={handleCreateEvent} classes={basicStyles}>
+    <Button onClick={onClick} classes={basicStyles}>
       Create Event
     </Button>
   );
