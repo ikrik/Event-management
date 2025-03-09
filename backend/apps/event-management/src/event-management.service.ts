@@ -12,10 +12,11 @@ export class EventManagementService {
   createEvent(event: CreateEventDto): EventDto {
     const newEvent: EventDto = {
       ...event,
+      date: new Date(event.date),
       id: uuidv4(),
     };
 
-    this.events.push(newEvent);
+    this.events.unshift(newEvent);
     return newEvent;
   }
 
