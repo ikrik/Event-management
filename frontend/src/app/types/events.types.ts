@@ -38,24 +38,5 @@ export interface UpdateEventsProps {
 export interface QueryParams {
   searchLocation: string;
   page: number;
+  UUID: string;
 }
-
-export const headers = {
-  id: '',
-  eventType: 'Event Type',
-  location: 'Location',
-  venue: 'Venue',
-  date: 'Date',
-  capacity: 'Capacity',
-};
-
-export const extraStyles = {
-  eventType: 'font-bold',
-  venue: 'font-bold',
-};
-
-export const iconsPerKey = {
-  location: 'location',
-  date: 'time',
-  capacity: 'users',
-};
