@@ -12,4 +12,4 @@ COPY ./backend/apps/api-gateway ./
 
 EXPOSE 3001
 
-CMD ["npm", "run", "start:api-dev"]
+CMD ["npm", "run", "start:api"]

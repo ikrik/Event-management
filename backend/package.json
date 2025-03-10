@@ -12,6 +12,8 @@
     "start:dev": "nest start --watch",
     "start:api-dev": "nest start api-gateway --watch",
     "start:event-dev": "nest start event-management --watch",
+    "start:api": "nest start api-gateway",
+    "start:event": "nest start event-management",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/event-management-app/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

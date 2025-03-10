@@ -11,4 +11,4 @@ COPY ./backend/apps/event-management ./
 
 EXPOSE 3002
 
-CMD ["npm", "run", "start:event-dev"]
+CMD ["npm", "run", "start:event"]
