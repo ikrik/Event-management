@@ -13,6 +13,14 @@ export function formatDate(dateString: string): string {
   return `${formattedDateTable[0]}, ${formattedDateTable[1]} ${formattedDateTable[2]}`;
 }
 
+export function formattedStingToDateString(input: string): string {
+  const date = new Date(input);
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date format');
+  }
+  return date.toISOString().split('T')[0];
+}
+
 export function isArrayEqualUnordered<T extends Record<string, any>>(arr1: T[], arr2: T[], key: string) {
   const compareFunctionality = (a: T, b: T) => {
     const valueA = a[key] as number | string;
