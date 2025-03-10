@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex bg-[#161616] text-white">
+      <body className="flex text-white">
         <SideBar />
         <main className="flex-1 p-6 w-full">
           <div className="my-10 mx-auto w-full max-w-[70%] xl:max-w-[85%] md:max-w-[95%]">{children}</div>
