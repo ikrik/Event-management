@@ -4,6 +4,7 @@ import CloseIcon from '@images/close';
 import { FC, ReactNode } from 'react';
 
 interface ModalProps {
+  id?: string;
   title: string;
   children: ReactNode;
   cancelText: string;
@@ -12,9 +13,9 @@ interface ModalProps {
   onSubmit: (...args: any[]) => void;
 }
 
-const Modal: FC<ModalProps> = ({ title, children, cancelText, onCancel, submitText, onSubmit }) => {
+const Modal: FC<ModalProps> = ({ id = 'modal', title, children, cancelText, onCancel, submitText, onSubmit }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/[.75]">
+    <div id={id} className="fixed inset-0 flex items-center justify-center z-50 bg-black/[.75]">
       <div className="relative w-full max-w-md max-h-full">
         <div className="relative rounded-lg shadow-sm bg-neutral-700">
           <div className="flex items-center justify-between px-4 py-3 border-b rounded-t border-neutral-600">

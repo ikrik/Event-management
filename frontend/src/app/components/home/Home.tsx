@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import DataTable from '@components/dataTable/DataTable';
 import { DynamicDate } from '@components/dynamicDate/DynamicDate';
@@ -8,7 +9,11 @@ import { Search } from '@components/search/Search';
 import useGetEvents from '@hooks/useGetEvents';
 import { convertObjectToURLParams, isArrayEqualUnordered } from '@utils/helpers';
 import { useEffect, useState } from 'react';
-import { extraStyles, FormattedEventItem, headers, iconsPerKey, Pagination, QueryParams } from 'types/events.types';
+import { iconsPerKey, extraStyles } from '@constants/helpers';
+import { FormattedEventItem, Mode, Pagination, QueryParams } from 'types/events.types';
+import { v4 as uuidv4 } from 'uuid';
+import { EventProvider } from './context/EventProvider';
+import { ToastContainer } from 'react-toastify';
 
 interface HomeProps {
   initialEvents: FormattedEventItem[];
@@ -38,7 +43,7 @@ export default function Home({ initialEvents, initPagination }: HomeProps) {
       }
       return { ...prev, ...qry };
     });
-    setShouldFetch(() => shouldCall);
+    setShouldFetch(shouldCall);
   };
 
   useEffect(() => {
@@ -53,6 +58,15 @@ export default function Home({ initialEvents, initPagination }: HomeProps) {
 
   const handleMoveToPage = (page: number) => {
     updateEvents({ page }, true);
+  };
+
+  const handleAddEditEvent = (type: Mode) => {
+    if (type === Mode.Add) {
+      updateEvents(pagination.page === 1 ? { UUID: uuidv4() } : { page: 1 }, true);
+      return;
+    }
+    // Mode type edit
+    updateEvents({ UUID: uuidv4() }, true);
   };
 
   return (
@@ -72,29 +86,32 @@ export default function Home({ initialEvents, initPagination }: HomeProps) {
         </div>
       </section>
       <section className="mt-20 flex flex-col w-full">
-        <div className="flex justify-end mb-4">
-          <EventCreateButton />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-2xl text-zinc-400 mb-6">Events</h3>
-          {error ? (
-            <div className="text-center">
-              <h3 className="text-3xl text-zinc-200 my-10">An error occurred while fetching the Events List</h3>
-            </div>
-          ) : (
-            <>
-              <DataTable
-                loading={shouldFetch && loading}
-                data={events}
-                headers={headers}
-                extraStyles={extraStyles}
-                iconsPerKey={iconsPerKey}
-              />
-              <Pager onMoveToPage={handleMoveToPage} {...pagination} />
-            </>
-          )}
-        </div>
+        <EventProvider>
+          <div className="flex justify-end mb-4">
+            <EventCreateButton />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-2xl text-zinc-400 mb-6">Events</h3>
+            {error ? (
+              <div className="text-center">
+                <h3 className="text-3xl text-zinc-200 my-10">An error occurred while fetching the Events List</h3>
+              </div>
+            ) : (
+              <>
+                <DataTable
+                  loading={shouldFetch && loading}
+                  data={events}
+                  extraStyles={extraStyles}
+                  iconsPerKey={iconsPerKey}
+                  onAddEditEvent={handleAddEditEvent}
+                />
+                <Pager onMoveToPage={handleMoveToPage} {...pagination} />
+              </>
+            )}
+          </div>
+        </EventProvider>
       </section>
+      <ToastContainer />
     </>
   );
 }

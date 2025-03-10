@@ -40,3 +40,8 @@ export interface QueryParams {
   page: number;
   UUID: string;
 }
+
+export enum Mode {
+  Add = 'add',
+  Edit = 'edit',
+}
