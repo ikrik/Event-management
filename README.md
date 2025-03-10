@@ -65,6 +65,7 @@ The frontend consists of one **Next.js** services:
 
    ```bash
    docker-compose up --build
+   (new version) docker compose up --build
    ```
 
    This will build the images and start the services.
@@ -79,6 +80,7 @@ The frontend consists of one **Next.js** services:
 
    ```bash
    docker-compose down
+   (new version) docker compose down
    ```
 
    This stops and removes the containers.
@@ -114,7 +116,7 @@ frontend/
 |--------|---------------------|-------------|
 | GET    | `/api/v1/events`    | Fetch all events |
 | GET    | `/api/v1/events/autocomplete?query=Ber` | Return all locations that contain the substring 'Ber' |
-| GET    | `/api/v1/events/search?location=Berlin` | Search for events based on location |
+| GET    | `/api/v1/events?searchLocation=Berlin&page=2` | Search for events based on location or paginate |
 | POST   | `/api/v1/events`    | Create a new event |
 | PUT    | `/api/v1/events/:id` | Update an existing event |
 
@@ -129,7 +131,8 @@ To ensure **hot reloading** during development, volumes are mounted so that chan
 
 - **Start with hot reloading**:
   ```bash
-  docker-compose up --build
+  docker-compose up
+  (new version) docker compose up
   ```
 - Any changes made to the **backend** or **frontend** will automatically be updated without needing to restart the containers.
 
